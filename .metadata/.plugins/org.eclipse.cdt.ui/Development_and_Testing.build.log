@@ -1,0 +1,326 @@
+18:35:46 **** Building Selected Files of configuration Debug for project Development_and_Testing ****
+Info: Internal Builder is used for build
+arm-none-eabi-gcc "..\\BSP\\Src\\DTH11.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc "-IC:\\Users\\pc\\Documents\\GitHub\\BSP-Libraries\\Development_and_Testing\\BSP\\Inc" -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "BSP\\Src\\DTH11.o" 
+In file included from ..\BSP\Src\DTH11.c:9:
+C:\Users\pc\Documents\GitHub\BSP-Libraries\Development_and_Testing\BSP\Inc/DTH11.h:21:1: error: multiple storage classes in declaration specifiers
+   21 | static typedef struct{
+      | ^~~~~~
+C:\Users\pc\Documents\GitHub\BSP-Libraries\Development_and_Testing\BSP\Inc/DTH11.h:31:1: error: unknown type name 'dht11_private_t'
+   31 | dht11_private_t dht11_data;
+      | ^~~~~~~~~~~~~~~
+..\BSP\Src\DTH11.c:17:8: warning: type defaults to 'int' in declaration of 'SetPin_as_Output' [-Wimplicit-int]
+   17 | static SetPin_as_Output(dht11_typedef_t* dht11);//Private function
+      |        ^~~~~~~~~~~~~~~~
+..\BSP\Src\DTH11.c:18:8: warning: type defaults to 'int' in declaration of 'SetPin_as_Input' [-Wimplicit-int]
+   18 | static SetPin_as_Input(dht11_typedef_t* dht11); //Private Functions
+      |        ^~~~~~~~~~~~~~~
+..\BSP\Src\DTH11.c:19:8: warning: type defaults to 'int' in declaration of 'gather_data' [-Wimplicit-int]
+   19 | static gather_data(void);      //private Function
+      |        ^~~~~~~~~~~
+..\BSP\Src\DTH11.c: In function 'dht11_Init':
+..\BSP\Src\DTH11.c:26:9: warning: comparison between pointer and integer
+   26 |  if(gpio==GPIOA){
+      |         ^~
+..\BSP\Src\DTH11.c:29:14: warning: comparison between pointer and integer
+   29 |  else if(gpio==GPIOB){
+      |              ^~
+..\BSP\Src\DTH11.c:32:14: warning: comparison between pointer and integer
+   32 |  else if(gpio==GPIOC){
+      |              ^~
+..\BSP\Src\DTH11.c:35:14: warning: comparison between pointer and integer
+   35 |  else if(gpio==GPIOD){
+      |              ^~
+..\BSP\Src\DTH11.c:38:14: warning: comparison between pointer and integer
+   38 |  else if(gpio==GPIOE){
+      |              ^~
+..\BSP\Src\DTH11.c:41:14: warning: comparison between pointer and integer
+   41 |  else if(gpio==GPIOF){
+      |              ^~
+..\BSP\Src\DTH11.c:44:14: warning: comparison between pointer and integer
+   44 |  else if(gpio==GPIOG){
+      |              ^~
+..\BSP\Src\DTH11.c:47:14: warning: comparison between pointer and integer
+   47 |  else if(gpio==GPIOH){
+      |              ^~
+..\BSP\Src\DTH11.c:50:14: warning: comparison between pointer and integer
+   50 |  else if(gpio==GPIOI){
+      |              ^~
+..\BSP\Src\DTH11.c:53:14: warning: comparison between pointer and integer
+   53 |  else if(gpio==GPIOJ){
+      |              ^~
+..\BSP\Src\DTH11.c:56:14: warning: comparison between pointer and integer
+   56 |  else if(gpio==GPIOK){
+      |              ^~
+..\BSP\Src\DTH11.c: In function 'dht11_DeInit':
+..\BSP\Src\DTH11.c:66:10: warning: comparison between pointer and integer
+   66 |   if(gpio==GPIOA){
+      |          ^~
+..\BSP\Src\DTH11.c:69:15: warning: comparison between pointer and integer
+   69 |   else if(gpio==GPIOB){
+      |               ^~
+..\BSP\Src\DTH11.c:72:15: warning: comparison between pointer and integer
+   72 |   else if(gpio==GPIOC){
+      |               ^~
+..\BSP\Src\DTH11.c:75:15: warning: comparison between pointer and integer
+   75 |   else if(gpio==GPIOD){
+      |               ^~
+..\BSP\Src\DTH11.c:78:15: warning: comparison between pointer and integer
+   78 |   else if(gpio==GPIOE){
+      |               ^~
+..\BSP\Src\DTH11.c:81:15: warning: comparison between pointer and integer
+   81 |   else if(gpio==GPIOF){
+      |               ^~
+..\BSP\Src\DTH11.c:84:15: warning: comparison between pointer and integer
+   84 |   else if(gpio==GPIOG){
+      |               ^~
+..\BSP\Src\DTH11.c:87:15: warning: comparison between pointer and integer
+   87 |   else if(gpio==GPIOH){
+      |               ^~
+..\BSP\Src\DTH11.c:90:15: warning: comparison between pointer and integer
+   90 |   else if(gpio==GPIOI){
+      |               ^~
+..\BSP\Src\DTH11.c:93:15: warning: comparison between pointer and integer
+   93 |   else if(gpio==GPIOJ){
+      |               ^~
+..\BSP\Src\DTH11.c:96:15: warning: comparison between pointer and integer
+   96 |   else if(gpio==GPIOK){
+      |               ^~
+..\BSP\Src\DTH11.c: In function 'dht11_Start':
+..\BSP\Src\DTH11.c:107:25: warning: passing argument 1 of 'HAL_GPIO_WritePin' makes pointer from integer without a cast [-Wint-conversion]
+  107 |  HAL_GPIO_WritePin(dht11->dthport, dht11->dthpin, GPIO_PIN_RESET);
+      |                    ~~~~~^~~~~~~~~
+      |                         |
+      |                         uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:235:38: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  235 | void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
+      |                        ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c:109:25: warning: passing argument 1 of 'HAL_GPIO_WritePin' makes pointer from integer without a cast [-Wint-conversion]
+  109 |  HAL_GPIO_WritePin(dht11->dthport, dht11->dthpin, GPIO_PIN_SET);
+      |                    ~~~~~^~~~~~~~~
+      |                         |
+      |                         uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:235:38: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  235 | void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
+      |                        ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c: In function 'checkdht11status':
+..\BSP\Src\DTH11.c:120:29: warning: passing argument 1 of 'HAL_GPIO_ReadPin' makes pointer from integer without a cast [-Wint-conversion]
+  120 |  if(!(HAL_GPIO_ReadPin(dht11->dthport, dht11->dthpin)))
+      |                        ~~~~~^~~~~~~~~
+      |                             |
+      |                             uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:234:46: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  234 | GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c:123:28: warning: passing argument 1 of 'HAL_GPIO_ReadPin' makes pointer from integer without a cast [-Wint-conversion]
+  123 |   if(HAL_GPIO_ReadPin(dht11->dthport, dht11->dthpin)){
+      |                       ~~~~~^~~~~~~~~
+      |                            |
+      |                            uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:234:46: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  234 | GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c:124:14: error: request for member 'status' in something not a structure or union
+  124 |    dht11_data.status=HAL_OK;
+      |              ^
+..\BSP\Src\DTH11.c:127:14: error: request for member 'status' in something not a structure or union
+  127 |    dht11_data.status=HAL_ERROR;
+      |              ^
+..\BSP\Src\DTH11.c:130:30: warning: passing argument 1 of 'HAL_GPIO_ReadPin' makes pointer from integer without a cast [-Wint-conversion]
+  130 |  while(HAL_GPIO_ReadPin(dht11->dthport, dht11->dthpin)); //wait for pin to go low
+      |                         ~~~~~^~~~~~~~~
+      |                              |
+      |                              uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:234:46: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  234 | GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c:132:19: error: request for member 'status' in something not a structure or union
+  132 |  return dht11_data.status;
+      |                   ^
+..\BSP\Src\DTH11.c: In function 'dht11_get_humidity':
+..\BSP\Src\DTH11.c:139:29: error: request for member 'humidity_byte1' in something not a structure or union
+  139 |   Humiditytemp=(((dht11_data.humidity_byte1)<<8)|(dht11_data.humidity_byte2));
+      |                             ^
+..\BSP\Src\DTH11.c:139:61: error: request for member 'humidity_byte2' in something not a structure or union
+  139 |   Humiditytemp=(((dht11_data.humidity_byte1)<<8)|(dht11_data.humidity_byte2));
+      |                                                             ^
+..\BSP\Src\DTH11.c: In function 'dht11_get_temperature':
+..\BSP\Src\DTH11.c:149:32: error: request for member 'temperature_byte1' in something not a structure or union
+  149 |   Temperaturetemp=(((dht11_data.temperature_byte1)<<8)|(dht11_data.temperature_byte2));
+      |                                ^
+..\BSP\Src\DTH11.c:149:67: error: request for member 'temperature_byte2' in something not a structure or union
+  149 |   Temperaturetemp=(((dht11_data.temperature_byte1)<<8)|(dht11_data.temperature_byte2));
+      |                                                                   ^
+..\BSP\Src\DTH11.c: In function 'dht11_get_checksum':
+..\BSP\Src\DTH11.c:157:20: error: request for member 'checksum' in something not a structure or union
+  157 |   return dht11_data.checksum;
+      |                    ^
+..\BSP\Src\DTH11.c: At top level:
+..\BSP\Src\DTH11.c:160:8: warning: return type defaults to 'int' [-Wimplicit-int]
+  160 | static SetPin_as_Input(dht11_typedef_t* dht11){
+      |        ^~~~~~~~~~~~~~~
+..\BSP\Src\DTH11.c: In function 'SetPin_as_Input':
+..\BSP\Src\DTH11.c:166:21: warning: passing argument 1 of 'HAL_GPIO_Init' makes pointer from integer without a cast [-Wint-conversion]
+  166 |  HAL_GPIO_Init(dht11->dthport, &Gpiodht11);
+      |                ~~~~~^~~~~~~~~
+      |                     |
+      |                     uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:224:36: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  224 | void  HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init);
+      |                     ~~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c: At top level:
+..\BSP\Src\DTH11.c:169:8: warning: return type defaults to 'int' [-Wimplicit-int]
+  169 | static SetPin_as_Output(dht11_typedef_t* dht11){
+      |        ^~~~~~~~~~~~~~~~
+..\BSP\Src\DTH11.c: In function 'SetPin_as_Output':
+..\BSP\Src\DTH11.c:174:21: warning: passing argument 1 of 'HAL_GPIO_Init' makes pointer from integer without a cast [-Wint-conversion]
+  174 |  HAL_GPIO_Init(dht11->dthport, &Gpiodht11);
+      |                ~~~~~^~~~~~~~~
+      |                     |
+      |                     uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:224:36: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  224 | void  HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init);
+      |                     ~~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c: At top level:
+..\BSP\Src\DTH11.c:177:16: error: conflicting types for 'dht11_read'
+  177 | static uint8_t dht11_read(dht11_typedef_t* dht11){
+      |                ^~~~~~~~~~
+..\BSP\Src\DTH11.c:16:16: note: previous declaration of 'dht11_read' was here
+   16 | static uint8_t dht11_read(void);    //Private function
+      |                ^~~~~~~~~~
+..\BSP\Src\DTH11.c: In function 'dht11_read':
+..\BSP\Src\DTH11.c:182:12: error: request for member 'tempdata' in something not a structure or union
+  182 |  dht11_data.tempdata=0;
+      |            ^
+..\BSP\Src\DTH11.c:184:33: warning: passing argument 1 of 'HAL_GPIO_ReadPin' makes pointer from integer without a cast [-Wint-conversion]
+  184 |   while(!(HAL_GPIO_ReadPin(dht11->dthport, dht11->dthpin))); //wait for pin to go high
+      |                            ~~~~~^~~~~~~~~
+      |                                 |
+      |                                 uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:234:46: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  234 | GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c:186:30: warning: passing argument 1 of 'HAL_GPIO_ReadPin' makes pointer from integer without a cast [-Wint-conversion]
+  186 |   if(!(HAL_GPIO_ReadPin(dht11->dthport, dht11->dthpin))){
+      |                         ~~~~~^~~~~~~~~
+      |                              |
+      |                              uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:234:46: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  234 | GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c:187:15: error: request for member 'tempdata' in something not a structure or union
+  187 |    (dht11_data.tempdata)&=~(1<<(7-i)); //write zero
+      |               ^
+..\BSP\Src\DTH11.c:190:15: error: request for member 'tempdata' in something not a structure or union
+  190 |    (dht11_data.tempdata)|=(1<<(7-i)); //write one
+      |               ^
+..\BSP\Src\DTH11.c:192:32: warning: passing argument 1 of 'HAL_GPIO_ReadPin' makes pointer from integer without a cast [-Wint-conversion]
+  192 |   while((HAL_GPIO_ReadPin(dht11->dthport, dht11->dthpin))); //wait for pin to go low
+      |                           ~~~~~^~~~~~~~~
+      |                                |
+      |                                uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:279,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ..\BSP\Src\DTH11.c:8:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:234:46: note: expected 'GPIO_TypeDef *' but argument is of type 'uint8_t' {aka 'unsigned char'}
+  234 | GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                ~~~~~~~~~~~~~~^~~~~
+..\BSP\Src\DTH11.c:195:19: error: request for member 'tempdata' in something not a structure or union
+  195 |  return dht11_data.tempdata;
+      |                   ^
+..\BSP\Src\DTH11.c: At top level:
+..\BSP\Src\DTH11.c:198:8: warning: return type defaults to 'int' [-Wimplicit-int]
+  198 | static gather_data(void){
+      |        ^~~~~~~~~~~
+..\BSP\Src\DTH11.c: In function 'gather_data':
+..\BSP\Src\DTH11.c:199:12: error: request for member 'humidity_byte1' in something not a structure or union
+  199 |  dht11_data.humidity_byte1=dht11_read(dht11);
+      |            ^
+..\BSP\Src\DTH11.c:199:39: error: 'dht11' undeclared (first use in this function)
+  199 |  dht11_data.humidity_byte1=dht11_read(dht11);
+      |                                       ^~~~~
+..\BSP\Src\DTH11.c:199:39: note: each undeclared identifier is reported only once for each function it appears in
+..\BSP\Src\DTH11.c:200:12: error: request for member 'humidity_byte2' in something not a structure or union
+  200 |  dht11_data.humidity_byte2=dht11_read(dht11);
+      |            ^
+..\BSP\Src\DTH11.c:201:12: error: request for member 'temperature_byte1' in something not a structure or union
+  201 |  dht11_data.temperature_byte1=dht11_read(dht11);
+      |            ^
+..\BSP\Src\DTH11.c:202:12: error: request for member 'temperature_byte2' in something not a structure or union
+  202 |  dht11_data.temperature_byte2=dht11_read(dht11);
+      |            ^
+..\BSP\Src\DTH11.c:203:12: error: request for member 'checksum' in something not a structure or union
+  203 |  dht11_data.checksum=dht11_read(dht11);
+      |            ^
+..\BSP\Src\DTH11.c: In function 'delayus':
+..\BSP\Src\DTH11.c:14:1: warning: control reaches end of non-void function [-Wreturn-type]
+   14 | }
+      | ^
+..\BSP\Src\DTH11.c: In function 'checkdht11status':
+..\BSP\Src\DTH11.c:133:1: warning: control reaches end of non-void function [-Wreturn-type]
+  133 | }
+      | ^
+..\BSP\Src\DTH11.c: In function 'dht11_get_checksum':
+..\BSP\Src\DTH11.c:158:1: warning: control reaches end of non-void function [-Wreturn-type]
+  158 | }
+      | ^
+..\BSP\Src\DTH11.c: In function 'SetPin_as_Input':
+..\BSP\Src\DTH11.c:167:1: warning: control reaches end of non-void function [-Wreturn-type]
+  167 | }
+      | ^
+..\BSP\Src\DTH11.c: In function 'SetPin_as_Output':
+..\BSP\Src\DTH11.c:175:1: warning: control reaches end of non-void function [-Wreturn-type]
+  175 | }
+      | ^
+..\BSP\Src\DTH11.c: In function 'dht11_read':
+..\BSP\Src\DTH11.c:196:1: warning: control reaches end of non-void function [-Wreturn-type]
+  196 | }
+      | ^
+..\BSP\Src\DTH11.c: In function 'gather_data':
+..\BSP\Src\DTH11.c:204:1: warning: control reaches end of non-void function [-Wreturn-type]
+  204 | }
+      | ^
+In file included from ..\BSP\Src\DTH11.c:9:
+At top level:
+C:\Users\pc\Documents\GitHub\BSP-Libraries\Development_and_Testing\BSP\Inc/DTH11.h:29:2: warning: 'dht11_private_t' defined but not used [-Wunused-variable]
+   29 | }dht11_private_t;
+      |  ^~~~~~~~~~~~~~~
+
+18:35:46 Build Failed. 21 errors, 46 warnings. (took 562ms)
+

@@ -1,0 +1,87 @@
+!SESSION 2022-09-24 09:17:44.951 -----------------------------------------------
+eclipse.buildId=Version 1.9.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-09-24 09:18:05.350
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-09-24 09:18:05.413
+!MESSAGE Log4j initialized with config file C:\Users\pc\Documents\GitHub\BSP-Libraries\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-09-24 09:18:08.225
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-09-24 09:18:32.570
+!MESSAGE Using unsafe http transport to retrieve http://eclipse-color-theme.github.io/update/, see CVE-2021-41033. Consider using https instead.
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-09-24 09:21:09.771
+!MESSAGE Indexed 'Servo' (21 sources, 81 headers) in 3.45 sec: 4,584 declarations; 20,528 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.008%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-09-24 09:23:56.472
+!MESSAGE Indexed 'Development_and_Testing' (21 sources, 81 headers) in 2.11 sec: 4,584 declarations; 20,528 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.008%)
+!SESSION 2022-09-24 09:45:12.296 -----------------------------------------------
+eclipse.buildId=Version 1.9.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data file:/C:/Users/pc/Documents/GitHub/BSP-Libraries/
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-09-24 09:45:16.804
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-09-24 09:45:16.867
+!MESSAGE Log4j initialized with config file C:\Users\pc\Documents\GitHub\BSP-Libraries\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-09-24 09:45:22.271
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-09-24 09:45:46.014
+!MESSAGE Using unsafe http transport to retrieve http://eclipse-color-theme.github.io/update/, see CVE-2021-41033. Consider using https instead.
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-09-24 13:19:47.948
+!MESSAGE Indexed 'Development_and_Testing' (22 sources, 100 headers) in 3.27 sec: 8,640 declarations; 44,636 references; 2 unresolved inclusions; 42 syntax errors; 159 unresolved names (0.3%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-09-24 13:20:18.163
+!MESSAGE Indexed 'Development_and_Testing' (23 sources, 101 headers) in 1.97 sec: 8,665 declarations; 44,672 references; 2 unresolved inclusions; 42 syntax errors; 161 unresolved names (0.3%)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.launch 2 0 2022-09-24 14:12:45.487
+!MESSAGE Won't launch debug session since we failed to locate the binary.
+!SESSION 2022-09-24 16:02:47.195 -----------------------------------------------
+eclipse.buildId=Version 1.9.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-09-24 16:03:02.217
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-09-24 16:03:02.280
+!MESSAGE Log4j initialized with config file C:\Users\pc\Documents\GitHub\BSP-Libraries\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-09-24 16:03:08.986
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-09-24 16:03:31.380
+!MESSAGE Using unsafe http transport to retrieve http://eclipse-color-theme.github.io/update/, see CVE-2021-41033. Consider using https instead.
+!SESSION 2022-09-24 16:09:21.946 -----------------------------------------------
+eclipse.buildId=Version 1.9.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-09-24 16:09:28.847
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-09-24 16:09:28.925
+!MESSAGE Log4j initialized with config file C:\Users\pc\Documents\GitHub\BSP-Libraries\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-09-24 16:09:34.331
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-09-24 16:09:56.557
+!MESSAGE Using unsafe http transport to retrieve http://eclipse-color-theme.github.io/update/, see CVE-2021-41033. Consider using https instead.

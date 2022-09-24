@@ -1,0 +1,61 @@
+/*
+ * DTH11.c
+ *
+ *  Created on: 24-Sep-2022
+ *      Author: Sanjay
+ */
+
+#include	"main.h"
+#include 	"DTH11.h"
+
+
+static uint8_t dth11_read(void);	//Private function
+static SetPin_as_Output(dth11_typedef_t* dth11);//Private function
+
+/*
+ * Initilize DTH11 pins
+ */
+void dth11_Init(dth11_typedef_t* dth11){
+	/* Enable gpio Clock */
+	uint8_t gpio=dth11->dthport;
+	if(gpio==GPIOA){
+		__HAL_RCC_GPIOA_CLK_ENABLE();
+	}
+	else if(gpio==GPIOB){
+		__HAL_RCC_GPIOB_CLK_ENABLE();
+	}
+	else if(gpio==GPIOC){
+		__HAL_RCC_GPIOC_CLK_ENABLE();
+	}
+	else if(gpio==GPIOD){
+		__HAL_RCC_GPIOD_CLK_ENABLE();
+	}
+	else if(gpio==GPIOE){
+		__HAL_RCC_GPIOE_CLK_ENABLE();
+	}
+	else if(gpio==GPIOF){
+		__HAL_RCC_GPIOF_CLK_ENABLE();
+	}
+	else if(gpio==GPIOG){
+		__HAL_RCC_GPIOG_CLK_ENABLE();
+	}
+	else if(gpio==GPIOH){
+		__HAL_RCC_GPIOH_CLK_ENABLE();
+	}
+	else if(gpio==GPIOI){
+		__HAL_RCC_GPIOI_CLK_ENABLE();
+	}
+	else if(gpio==GPIOJ){
+		__HAL_RCC_GPIOJ_CLK_ENABLE();
+	}
+	else if(gpio==GPIOK){
+		__HAL_RCC_GPIOK_CLK_ENABLE();
+	}
+
+	/*Set up Gpio Pin*/
+	GPIO_InitTypeDef GpioDth11;
+	GpioDth11.Pin=dth11->dthpin;
+	GpioDth11.Mode=GPIO_MODE_OUTPUT_PP;
+	GpioDth11.Speed=GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(dth11->dthport, &GpioDth11);
+}

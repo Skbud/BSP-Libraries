@@ -1,0 +1,25 @@
+/*
+ * Servo_Motor.h
+ *
+ *  Created on: 24-Sep-2022
+ *      Author: Sanjay
+ */
+
+#ifndef INC_SERVO_MOTOR_H_
+#define INC_SERVO_MOTOR_H_
+
+typedef struct{
+	uint8_t pin;		//pin to which servo is connected
+	uint8_t port;		//port on which servo is connected
+}servo_connected_at_t;
+
+static typedef struct{
+	uint8_t	timer;		//timer used to generate pwm
+	uint8_t	channel;	//timer channel to which servo is connected
+	uint32_t	timclock;	//Clock source for the timer
+	uint
+
+}servo_config_t;
+
+
+#endif /* INC_SERVO_MOTOR_H_ */

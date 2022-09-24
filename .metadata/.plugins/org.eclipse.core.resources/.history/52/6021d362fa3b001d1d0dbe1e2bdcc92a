@@ -1,0 +1,22 @@
+/*
+ * DTH11.h
+ *
+ *  Created on: 24-Sep-2022
+ *      Author: Sanjay
+ */
+
+#ifndef INC_DTH11_H_
+#define INC_DTH11_H_
+
+#endif /* INC_DTH11_H_ */
+
+typedef struct{
+	uint8_t dthpin;
+	uint8_t dthport;
+	uint8_t humidity_byte1;
+	uint8_t humidity_byte2;
+	uint8_t	temp_byte1;
+	uint8_t	temp_byte2;
+	uint8_t	checksum;
+}dth11_typedef_t;
+
