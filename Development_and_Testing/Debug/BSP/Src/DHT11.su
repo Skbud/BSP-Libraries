@@ -1,0 +1,9 @@
+../BSP/Src/DHT11.c:121:6:dht11_Start	8	static
+../BSP/Src/DHT11.c:138:9:dht11_checkdht11status	16	static
+../BSP/Src/DHT11.c:159:10:dht11_read	16	static
+../BSP/Src/DHT11.c:180:7:dht11_get_humidity	16	static
+../BSP/Src/DHT11.c:190:7:dht11_get_temperature	16	static
+../BSP/Src/DHT11.c:199:9:dht11_get_checksum	4	static
+../BSP/Src/DHT11.c:204:13:SetPin_as_Input	40	static
+../BSP/Src/DHT11.c:212:13:SetPin_as_Output	40	static
+../BSP/Src/DHT11.c:223:13:gather_data	8	static

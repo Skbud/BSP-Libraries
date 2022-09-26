@@ -73,8 +73,6 @@ void Error_Handler(void);
 #define A3_GPIO_Port GPIOF
 #define A4_Pin GPIO_PIN_4
 #define A4_GPIO_Port GPIOF
-#define A5_Pin GPIO_PIN_5
-#define A5_GPIO_Port GPIOF
 #define SPI5_SCK_Pin GPIO_PIN_7
 #define SPI5_SCK_GPIO_Port GPIOF
 #define SPI5_MISO_Pin GPIO_PIN_8
@@ -93,8 +91,6 @@ void Error_Handler(void);
 #define NCS_MEMS_SPI_GPIO_Port GPIOC
 #define CSX_Pin GPIO_PIN_2
 #define CSX_GPIO_Port GPIOC
-#define B1_Pin GPIO_PIN_0
-#define B1_GPIO_Port GPIOA
 #define MEMS_INT2_Pin GPIO_PIN_2
 #define MEMS_INT2_GPIO_Port GPIOA
 #define B5_Pin GPIO_PIN_3
@@ -191,8 +187,6 @@ void Error_Handler(void);
 #define G6_GPIO_Port GPIOC
 #define I2C3_SDA_Pin GPIO_PIN_9
 #define I2C3_SDA_GPIO_Port GPIOC
-#define I2C3_SCL_Pin GPIO_PIN_8
-#define I2C3_SCL_GPIO_Port GPIOA
 #define STLINK_RX_Pin GPIO_PIN_9
 #define STLINK_RX_GPIO_Port GPIOA
 #define STLINK_TX_Pin GPIO_PIN_10
@@ -242,7 +236,7 @@ void Error_Handler(void);
 #define NBL1_Pin GPIO_PIN_1
 #define NBL1_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
-
+void delayus(uint16_t time);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

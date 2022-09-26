@@ -5,12 +5,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../BSP/Src/DHT11.c \
 ../BSP/Src/Servo_Motor.c 
 
 OBJS += \
+./BSP/Src/DHT11.o \
 ./BSP/Src/Servo_Motor.o 
 
 C_DEPS += \
+./BSP/Src/DHT11.d \
 ./BSP/Src/Servo_Motor.d 
 
 
@@ -21,7 +24,7 @@ BSP/Src/%.o BSP/Src/%.su: ../BSP/Src/%.c BSP/Src/subdir.mk
 clean: clean-BSP-2f-Src
 
 clean-BSP-2f-Src:
-	-$(RM) ./BSP/Src/Servo_Motor.d ./BSP/Src/Servo_Motor.o ./BSP/Src/Servo_Motor.su
+	-$(RM) ./BSP/Src/DHT11.d ./BSP/Src/DHT11.o ./BSP/Src/DHT11.su ./BSP/Src/Servo_Motor.d ./BSP/Src/Servo_Motor.o ./BSP/Src/Servo_Motor.su
 
 .PHONY: clean-BSP-2f-Src
 

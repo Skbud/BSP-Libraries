@@ -21,7 +21,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Servo_Motor.h"
+//#include "Servo_Motor.h"
+#include	<string.h>
+#include	<stdio.h>
+//#include "DelayMicroSec.h"
+#include	"DHT11.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,6 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -41,10 +47,13 @@
 /* Private variables ---------------------------------------------------------*/
  ADC_HandleTypeDef hadc1;
 
+TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 
-/* USER CODE BEGIN PV */
+UART_HandleTypeDef huart1;
 
+/* USER CODE BEGIN PV */
+//dht11_typedef_t sensor;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -52,19 +61,31 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_ADC1_Init(void);
+static void MX_TIM1_Init(void);
+static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void delayus(uint16_t time){
+	//To be implemented in main.c
+	__HAL_TIM_SET_COUNTER(&htim1, 0);
+		while ((__HAL_TIM_GET_COUNTER(&htim1))<time);
+}
+
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t adcreading;
-uint32_t convertedreading;
+//uint32_t adcreading;
+//uint32_t convertedreading;
+char msg[100];
 
 uint32_t MAP(uint32_t au32_IN, uint32_t au32_INmin, uint32_t au32_INmax, uint32_t au32_OUTmin, uint32_t au32_OUTmax)
   {
       return ((((au32_IN - au32_INmin)*(au32_OUTmax - au32_OUTmin))/(au32_INmax - au32_INmin)) + au32_OUTmin);
   }
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -97,21 +118,36 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   MX_ADC1_Init();
+  MX_TIM1_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-  move_servo(&htim2, 0);
+  //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  //move_servo(&htim2, 0);
+  HAL_TIM_Base_Start(&htim1);
+  //sensor.dhtpin=10;
+  //sensor.dhtport=GPIOA;
+  //dht11_Init(sensor);
+//uint8_t i=0;
+//uint8_t p=0;
+float humidity=0;
+float temperature=0;
+uint8_t checksum=0;
 
 
 
-uint8_t i=0;
-uint8_t p=0;
+//uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2;
+//uint16_t SUM, RH, TEMP;
+
+//float Temperature = 0;
+//float Humidity = 0;
+//uint8_t Presence = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(p==0){
+	  /*if(p==0){
 	  while(i<180){
 		  move_servo(&htim2, i);
 		  HAL_Delay(10);
@@ -127,6 +163,69 @@ uint8_t p=0;
 	 	  }
 		  p=0;
 	  }
+	 */
+	 dht11_Start();
+//	 if(dht11_checkdht11status()==HAL_OK){
+//		  humidity=dht11_get_humidity();
+//		  temperature=dht11_get_temperature();
+//		  checksum=dht11_get_checksum();
+//	  }
+	 dht11_checkdht11status();
+	 humidity=dht11_get_humidity();
+	 temperature=dht11_get_temperature();
+	 checksum=dht11_get_checksum();
+
+//	 humidity=dht11_read();
+//	 temperature=dht11_read();
+//	 checksum=dht11_read();
+	  sprintf(msg,"Humidity:%f \r\n",humidity);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+
+	  sprintf(msg,"Temperature:%lf \r\n",temperature);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+
+	  sprintf(msg,"Checksum:%u \r\n",checksum);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+
+
+	/* float hum=12.125;
+	 sprintf(msg,"Humidity:%f \r\n",hum);
+	 HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+
+
+
+
+	  	  DHT11_Start();
+	  	  Presence = DHT11_Check_Response();
+	  	  Rh_byte1 = DHT11_Read ();
+	  	  Rh_byte2 = DHT11_Read ();
+	  	  Temp_byte1 = DHT11_Read ();
+	  	  Temp_byte2 = DHT11_Read ();
+	  	  SUM = DHT11_Read();
+
+	  	  TEMP = ((Temp_byte1<<8)|Temp_byte2);
+	  	  RH = ((Rh_byte1<<8)|Rh_byte2);
+
+
+	  	  Temperature = (float) TEMP;
+	  	  Humidity = (float) RH;
+
+	  	sprintf(msg,"Temperature:%lf \r\n",Temperature);
+	  	HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  	HAL_Delay(500);
+
+
+	  	sprintf(msg,"Temperature:%lf \r\n",Humidity);
+	  	HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  	HAL_Delay(500);
+
+	  	sprintf(msg,"Checksum:%u \r\n",SUM);
+	  	HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  	HAL_Delay(500);
+*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -233,6 +332,52 @@ static void MX_ADC1_Init(void)
 }
 
 /**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 50-1;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 0xffff-1;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+
+}
+
+/**
   * @brief TIM2 Initialization Function
   * @param None
   * @retval None
@@ -292,6 +437,39 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -314,7 +492,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, NCS_MEMS_SPI_Pin|CSX_Pin|OTG_FS_PSO_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(ACP_RST_GPIO_Port, ACP_RST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0|ACP_RST_Pin|GPIO_PIN_8, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, RDX_Pin|WRX_DCX_Pin, GPIO_PIN_RESET);
@@ -323,11 +501,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOG, LD3_Pin|LD4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : A0_Pin A1_Pin A2_Pin A3_Pin
-                           A4_Pin A5_Pin SDNRAS_Pin A6_Pin
-                           A7_Pin A8_Pin A9_Pin */
+                           A4_Pin SDNRAS_Pin A6_Pin A7_Pin
+                           A8_Pin A9_Pin */
   GPIO_InitStruct.Pin = A0_Pin|A1_Pin|A2_Pin|A3_Pin
-                          |A4_Pin|A5_Pin|SDNRAS_Pin|A6_Pin
-                          |A7_Pin|A8_Pin|A9_Pin;
+                          |A4_Pin|SDNRAS_Pin|A6_Pin|A7_Pin
+                          |A8_Pin|A9_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -365,8 +543,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : B1_Pin MEMS_INT2_Pin TP_INT1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin|MEMS_INT2_Pin|TP_INT1_Pin;
+  /*Configure GPIO pins : PA0 ACP_RST_Pin PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|ACP_RST_Pin|GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : MEMS_INT2_Pin TP_INT1_Pin */
+  GPIO_InitStruct.Pin = MEMS_INT2_Pin|TP_INT1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_EVT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -380,13 +565,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : ACP_RST_Pin */
-  GPIO_InitStruct.Pin = ACP_RST_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(ACP_RST_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : OTG_FS_OC_Pin */
   GPIO_InitStruct.Pin = OTG_FS_OC_Pin;
@@ -498,22 +676,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
   HAL_GPIO_Init(I2C3_SDA_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : I2C3_SCL_Pin */
-  GPIO_InitStruct.Pin = I2C3_SCL_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
-  HAL_GPIO_Init(I2C3_SCL_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : STLINK_RX_Pin STLINK_TX_Pin */
-  GPIO_InitStruct.Pin = STLINK_RX_Pin|STLINK_TX_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : G7_Pin B2_Pin */
   GPIO_InitStruct.Pin = G7_Pin|B2_Pin;
