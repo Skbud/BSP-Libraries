@@ -53,7 +53,7 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-//dht11_typedef_t sensor;
+dht11_typedef_t sensor;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -124,14 +124,14 @@ int main(void)
   //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   //move_servo(&htim2, 0);
   HAL_TIM_Base_Start(&htim1);
-  //sensor.dhtpin=10;
-  //sensor.dhtport=GPIOA;
+  sensor.dhtport=GPIOA;
+  sensor.dhtpin=GPIO_PIN_8;
   //dht11_Init(sensor);
 //uint8_t i=0;
 //uint8_t p=0;
 float humidity=0;
 float temperature=0;
-uint8_t checksum=0;
+//uint8_t checksum=0;
 
 
 
@@ -145,6 +145,7 @@ uint8_t checksum=0;
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	dht11_Init(sensor);
   while (1)
   {
 	  /*if(p==0){
@@ -164,20 +165,22 @@ uint8_t checksum=0;
 		  p=0;
 	  }
 	 */
-	 dht11_Start();
+//	 dht11_Start();
 //	 if(dht11_checkdht11status()==HAL_OK){
 //		  humidity=dht11_get_humidity();
 //		  temperature=dht11_get_temperature();
 //		  checksum=dht11_get_checksum();
 //	  }
-	 dht11_checkdht11status();
+//	 dht11_checkdht11status();
+//	 humidity=dht11_get_humidity();
+//	 temperature=dht11_get_temperature();
+//	 checksum=dht11_get_checksum();
+
+	 gather_data(sensor);
 	 humidity=dht11_get_humidity();
 	 temperature=dht11_get_temperature();
-	 checksum=dht11_get_checksum();
+	 //checksum=dht11_get_checksum();
 
-//	 humidity=dht11_read();
-//	 temperature=dht11_read();
-//	 checksum=dht11_read();
 	  sprintf(msg,"Humidity:%f \r\n",humidity);
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
@@ -186,9 +189,9 @@ uint8_t checksum=0;
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
 
-	  sprintf(msg,"Checksum:%u \r\n",checksum);
-	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
-	  HAL_Delay(500);
+//	  sprintf(msg,"Checksum:%u \r\n",checksum);
+//	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+//	  HAL_Delay(500);
 
 
 	/* float hum=12.125;

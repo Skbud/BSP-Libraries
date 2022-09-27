@@ -5,41 +5,45 @@
  *      Author: Sanjay
  */
 
-/*
- * Facing issue with parameter passing in form of regdef structs as of now ony bare code is
- * implemented for testing purpose
+/*USAGE:-
+ * step1: Create deayyus function  using timers in main.c and give its prototype in main.h
+ * step2: Call the init function
+ * step3: call the gatherdata() every time you read the sensor
+ * step4: Get results using gettemperature()/gethumidity()
+ *
  */
 #include "main.h"
 #include <DHT11.h>
 
 
 
-//#include "DelayMicroSec.h"
 
+//Create delay in micro Seconds
 //void delayus(uint16_t time){
 //	//To be implemented in main.c
 //	__HAL_TIM_SET_COUNTER(&htim1, 0);
 //		while ((__HAL_TIM_GET_COUNTER(&htim1))<time);
 //}
 
+//private variables
 static uint8_t	checksum;
 static uint8_t	humidity_byte1;
 static uint8_t	humidity_byte2;
 static uint8_t	temperature_byte1;
 static uint8_t	temperature_byte2;
-float humidity;
-float temperature;
+static uint8_t	status;
 
 
-static uint8_t dht11_read(void);				//Private function
-static void SetPin_as_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);//Private function
-static void SetPin_as_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);	//Private Functions
-static void gather_data(void);						//private Function
+//Private functions
+static void dht11_Start(GPIO_TypeDef* DHT11_PORT, uint16_t DHT11_PIN);
+static uint8_t dht11_checkdht11status(GPIO_TypeDef* DHT11_PORT, uint16_t DHT11_PIN);
+static uint8_t dht11_read(GPIO_TypeDef* DHT11_PORT, uint16_t DHT11_PIN);
+static void SetPin_as_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+static void SetPin_as_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+
 /*
  * Initilize dht11 pins
  */
-
-/*
 void dht11_Init(dht11_typedef_t dht11){
 	// Enable gpio Clock
 	GPIO_TypeDef* gpio=dht11.dhtport;
@@ -77,8 +81,6 @@ void dht11_Init(dht11_typedef_t dht11){
 		__HAL_RCC_GPIOK_CLK_ENABLE();
 	}
 
-	//Set up Gpio Pin
-	//SetPin_as_Output(dht11);
 }
 
 void dht11_DeInit(dht11_typedef_t dht11){
@@ -117,8 +119,8 @@ void dht11_DeInit(dht11_typedef_t dht11){
 			__HAL_RCC_GPIOK_CLK_DISABLE();
 		}
 }
-*/
-void dht11_Start(void){
+
+void dht11_Start(GPIO_TypeDef* DHT11_PORT, uint16_t DHT11_PIN){
 	//Refer dataSheet
 	/*	1.pull pin low for 18000us
 	 * 	2.pull the pin high for 20us
@@ -126,16 +128,16 @@ void dht11_Start(void){
 	 */
 	SetPin_as_Output(DHT11_PORT, DHT11_PIN);
 	HAL_GPIO_WritePin(DHT11_PORT, DHT11_PIN, GPIO_PIN_RESET);
-	delayus(18000); //to be implemented in main.c
+	delayus(18000);
 	HAL_GPIO_WritePin(DHT11_PORT, DHT11_PIN, GPIO_PIN_SET);
-	delayus(20);
+	delayus(20); //to be implemented in main.c
 	SetPin_as_Input(DHT11_PORT, DHT11_PIN);
 }
 
 
 
 
-uint8_t dht11_checkdht11status(){
+uint8_t dht11_checkdht11status(GPIO_TypeDef* DHT11_PORT, uint16_t DHT11_PIN){
 	/*
 	 * check if dht11 pulls pin low for 80us & high for 80us
 	 */
@@ -156,7 +158,7 @@ uint8_t dht11_checkdht11status(){
 	return status;
 }
 
- uint8_t dht11_read(void){
+static uint8_t dht11_read(GPIO_TypeDef* DHT11_PORT, uint16_t DHT11_PIN){
 	/* 50us to start a bit
 	 * 26-28us of high pulse means logic Zero
 	 * 70us of high pulse means logic One
@@ -178,28 +180,56 @@ uint8_t dht11_checkdht11status(){
 
 
 float dht11_get_humidity(){
-	 gather_data();
-	 uint16_t Humiditytemp;
-
-	 Humiditytemp=(((humidity_byte1)<<8)|(humidity_byte2));
-	 humidity=(float)Humiditytemp;
-
-	 return humidity;
+//	if(humidity_byte1+humidity_byte2+temperature_byte1+temperature_byte2==checksum)
+//	 	{
+//		humidity=(float)humidity_byte1+(float)(humidity_byte2/10.0);//check if valid data is received
+//		return humidity;
+//	 	}
+//	else{
+//		return HAL_ERROR;
+//		}
+	float humidity=0.0;
+	humidity=(float)humidity_byte1+(float)(humidity_byte2/10.0);
+	return humidity;
 }
 
 float dht11_get_temperature(){
-		//gather_data();
-		uint16_t Temperaturetemp;
-		Temperaturetemp=(((temperature_byte1)<<8)|(temperature_byte2));
-		temperature=(float)Temperaturetemp;
+//	if(humidity_byte1+humidity_byte2+temperature_byte1+temperature_byte2==checksum)
+//		{
+//		temperature=(float)temperature_byte1+(float)(temperature_byte2/10.0); //check if valid data is received
+//		return temperature;
+//		}
+//	else{
+//		return HAL_ERROR;
+//		}
 
-		return temperature;
+	float temperature=0.0;
+	temperature=(float)temperature_byte1+(float)(temperature_byte2/10.0);
+	return temperature;
 }
 
 uint8_t dht11_get_checksum(){
-		//gather_data();
 		return checksum;
 }
+
+
+
+uint8_t gather_data(dht11_typedef_t dht11){
+	dht11_Start(dht11.dhtport, dht11.dhtpin);
+	status=dht11_checkdht11status(dht11.dhtport, dht11.dhtpin);
+	humidity_byte1=dht11_read(dht11.dhtport, dht11.dhtpin);
+	humidity_byte2=dht11_read(dht11.dhtport, dht11.dhtpin);
+	temperature_byte1=dht11_read(dht11.dhtport, dht11.dhtpin);
+	temperature_byte2=dht11_read(dht11.dhtport, dht11.dhtpin);
+	checksum=dht11_read(dht11.dhtport, dht11.dhtpin);
+	if(status==HAL_OK){
+		return HAL_OK;
+	}
+	else{
+		return HAL_ERROR;
+	}
+}
+
 
 static void SetPin_as_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin){
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -215,15 +245,4 @@ static void SetPin_as_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin){
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
-}
-
-
-
-
-static void gather_data(){
-	humidity_byte1=dht11_read();
-	humidity_byte2=dht11_read();
-	temperature_byte1=dht11_read();
-	temperature_byte2=dht11_read();
-	checksum=dht11_read();
 }
