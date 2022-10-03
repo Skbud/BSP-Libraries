@@ -26,7 +26,7 @@
 #include	<stdio.h>
 //#include "DelayMicroSec.h"
 #include	"DHT11.h"
-
+#include	"mpu6050.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,6 +47,8 @@
 /* Private variables ---------------------------------------------------------*/
  ADC_HandleTypeDef hadc1;
 
+I2C_HandleTypeDef hi2c3;
+
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 
@@ -54,6 +56,7 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 dht11_typedef_t sensor;
+mpu6050_t	mpu6050;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,6 +66,7 @@ static void MX_TIM2_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
 void delayus(uint16_t time){
 	//To be implemented in main.c
@@ -120,17 +124,18 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_USART1_UART_Init();
+  MX_I2C3_Init();
   /* USER CODE BEGIN 2 */
   //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   //move_servo(&htim2, 0);
   HAL_TIM_Base_Start(&htim1);
-  sensor.dhtport=GPIOA;
-  sensor.dhtpin=GPIO_PIN_8;
+//  sensor.dhtport=GPIOA;
+//  sensor.dhtpin=GPIO_PIN_8;
   //dht11_Init(sensor);
 //uint8_t i=0;
 //uint8_t p=0;
-float humidity=0;
-float temperature=0;
+//float humidity=0;
+//float temperature=0;
 //uint8_t checksum=0;
 
 
@@ -145,7 +150,15 @@ float temperature=0;
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	dht11_Init(sensor);
+//	dht11_Init(sensor);
+
+  mpu6050.DLPF=0;
+  mpu6050.SampPreSc=0x07;
+  mpu6050.accFSR=ACC_2G;
+  mpu6050.gyroFSR=GYRO_250;
+  mpu6050.mpu6050_Clk_Src=INT_OSC;
+  mpu6050.enableFIFO=FIFO_ALL;
+  mpu6050Init(&mpu6050);
   while (1)
   {
 	  /*if(p==0){
@@ -175,19 +188,19 @@ float temperature=0;
 //	 humidity=dht11_get_humidity();
 //	 temperature=dht11_get_temperature();
 //	 checksum=dht11_get_checksum();
-
-	 gather_data(sensor);
-	 humidity=dht11_get_humidity();
-	 temperature=dht11_get_temperature();
-	 //checksum=dht11_get_checksum();
-
-	  sprintf(msg,"Humidity:%f \r\n",humidity);
-	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
-	  HAL_Delay(500);
-
-	  sprintf(msg,"Temperature:%lf \r\n",temperature);
-	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
-	  HAL_Delay(500);
+//
+//	 gather_data(sensor);
+//	 humidity=dht11_get_humidity();
+//	 temperature=dht11_get_temperature();
+//	 //checksum=dht11_get_checksum();
+//
+//	  sprintf(msg,"Humidity:%f \r\n",humidity);
+//	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+//	  HAL_Delay(500);
+//
+//	  sprintf(msg,"Temperature:%lf \r\n",temperature);
+//	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+//	  HAL_Delay(500);
 
 //	  sprintf(msg,"Checksum:%u \r\n",checksum);
 //	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
@@ -229,6 +242,58 @@ float temperature=0;
 	  	HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  	HAL_Delay(500);
 */
+
+/*
+ * mpu6050 test
+ */
+	  gatherRawData();
+//float ax=getXaccelerationFIFO(&mpu6050);//getXaccelerationRaw();
+float ax=getXaccelerationRaw();
+	  sprintf(msg,"AX:%lf \r\n",ax);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+	  gatherRawData();
+//float ay=getYaccelerationFIFO(&mpu6050);//getYaccelerationRaw();
+float ay=getYaccelerationRaw();
+	  sprintf(msg,"AY:%lf \r\n",ay);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+	  gatherRawData();
+//float az=getZaccelerationFIFO(&mpu6050);//getZaccelerationRaw();
+float az=getZaccelerationRaw();
+	  sprintf(msg,"AZ:%lf \r\n",az);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+	  gatherRawData();
+//float gx=getXgyroFIFO(&mpu6050);//getXgyroRaw();
+float gx=getXgyroRaw();
+	  sprintf(msg,"GX:%lf \r\n",gx);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+	 gatherRawData();
+//float gy=getYgyroFIFO(&mpu6050);//getYgyroRaw();
+float gy=getYgyroRaw();
+	  sprintf(msg,"GY:%lf \r\n",gy);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+	  gatherRawData();
+//float gz=getZgyroFIFO(&mpu6050);//getZgyroRaw();
+float gz=getZgyroRaw();
+	  sprintf(msg,"GZ:%lf \r\n",gz);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+	  gatherRawData();
+//float t=getTemperatureFIFO(&mpu6050);//getTemperatureRaw();
+float t=getTemperatureRaw();
+	  sprintf(msg,"T:%lf \r\n",t);
+	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	  HAL_Delay(500);
+
+
+
+
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -331,6 +396,54 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief I2C3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C3_Init(void)
+{
+
+  /* USER CODE BEGIN I2C3_Init 0 */
+
+  /* USER CODE END I2C3_Init 0 */
+
+  /* USER CODE BEGIN I2C3_Init 1 */
+
+  /* USER CODE END I2C3_Init 1 */
+  hi2c3.Instance = I2C3;
+  hi2c3.Init.ClockSpeed = 400000;
+  hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c3.Init.OwnAddress1 = 0;
+  hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c3.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c3.Init.OwnAddress2 = 0;
+  hi2c3.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c3.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Analogue filter
+  */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c3, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Digital filter
+  */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c3, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C3_Init 2 */
+
+  /* USER CODE END I2C3_Init 2 */
 
 }
 
@@ -495,7 +608,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, NCS_MEMS_SPI_Pin|CSX_Pin|OTG_FS_PSO_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0|ACP_RST_Pin|GPIO_PIN_8, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0|ACP_RST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, RDX_Pin|WRX_DCX_Pin, GPIO_PIN_RESET);
@@ -546,8 +659,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA0 ACP_RST_Pin PA8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|ACP_RST_Pin|GPIO_PIN_8;
+  /*Configure GPIO pins : PA0 ACP_RST_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|ACP_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -671,14 +784,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : I2C3_SDA_Pin */
-  GPIO_InitStruct.Pin = I2C3_SDA_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
-  HAL_GPIO_Init(I2C3_SDA_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : G7_Pin B2_Pin */
   GPIO_InitStruct.Pin = G7_Pin|B2_Pin;

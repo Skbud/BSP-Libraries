@@ -1,0 +1,11 @@
+/*
+ * mpu.c
+ *
+ *  Created on: 30-Sep-2022
+ *      Author: pc
+ */
+
+
+#include "main.h"
+
+HAL_GPIO_MODULE_ENABLED

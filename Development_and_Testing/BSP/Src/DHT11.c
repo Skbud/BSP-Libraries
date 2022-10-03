@@ -246,3 +246,6 @@ static void SetPin_as_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin){
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 }
+
+
+

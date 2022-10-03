@@ -1,0 +1,38 @@
+/*
+ * mpu6050.h
+ *
+ *  Created on: 30-Sep-2022
+ *      Author: Sanjay
+ */
+
+#ifndef INC_MPU6050_H_
+#define INC_MPU6050_H_
+#endif /* INC_MPU6050_H_ */
+
+#include"main.h"
+
+typedef struct{
+	uint8_t mpu6050_Clk_Src;	//@ref
+	uint8_t enable_sensors;		//enables sensors of mpu6050 @ref
+	uint8_t SampPreSc;			/*Sampling prescalar @ref datasheet
+								Sample Rate = Gyroscope Output Rate / (1 + SMPLRT_DIV)
+								*/
+	uint8_t	DLPF;				//Digital Low Pass Filter @ref
+
+
+}mpu6050_t;
+
+
+
+
+void mpu6050Init();
+void mpu6050Deinit();
+float getXacceleration();
+float getYacceleration();
+float getZacceleration();
+float getXgyro();
+float getYgyro();
+float getZgyro();
+float getTemperature();
+
+
