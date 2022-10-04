@@ -15,7 +15,9 @@
 //extern hi2c3;
 //I2C_HandleTypeDef hi2c=hi2c3;
 
-#define MPU6050ADDR		0X68
+#define MPU6050ADDR		0x68<<1
+
+//uint16_t MPU6050ADDR=0x68;
 
 typedef struct{
 	uint8_t mpu6050_Clk_Src;	//@ref Clk_Src

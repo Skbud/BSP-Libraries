@@ -143,10 +143,6 @@ void Error_Handler(void);
 #define D11_GPIO_Port GPIOE
 #define D12_Pin GPIO_PIN_15
 #define D12_GPIO_Port GPIOE
-#define G4_Pin GPIO_PIN_10
-#define G4_GPIO_Port GPIOB
-#define G5_Pin GPIO_PIN_11
-#define G5_GPIO_Port GPIOB
 #define OTG_HS_ID_Pin GPIO_PIN_12
 #define OTG_HS_ID_GPIO_Port GPIOB
 #define VBUS_HS_Pin GPIO_PIN_13

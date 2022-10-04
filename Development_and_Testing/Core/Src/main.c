@@ -75,6 +75,122 @@ void delayus(uint16_t time){
 }
 
 
+
+
+///*#define MPU6050_ADDR 0xD0
+//
+//
+//#define SMPLRT_DIV_REG 0x19
+//#define GYRO_CONFIG_REG 0x1B
+//#define ACCEL_CONFIG_REG 0x1C
+//#define ACCEL_XOUT_H_REG 0x3B
+//#define TEMP_OUT_H_REG 0x41
+//#define GYRO_XOUT_H_REG 0x43
+//#define PWR_MGMT_1_REG 0x6B
+//#define WHO_AM_I_REG 0x75
+//
+//
+//int16_t Accel_X_RAW = 0;
+//int16_t Accel_Y_RAW = 0;
+//int16_t Accel_Z_RAW = 0;
+//
+//int16_t Gyro_X_RAW = 0;
+//int16_t Gyro_Y_RAW = 0;
+//int16_t Gyro_Z_RAW = 0;
+//
+//float Ax, Ay, Az, Gx, Gy, Gz;
+//
+//
+//void MPU6050_Init (void)
+//{
+//	uint8_t check;
+//	uint8_t Data;
+//
+//	// check device ID WHO_AM_I
+//
+//	HAL_I2C_Mem_Read (&hi2c3, MPU6050_ADDR,WHO_AM_I_REG,1, &check, 1, 1000);
+//
+//	if (check == 104)  // 0x68 will be returned by the sensor if everything goes well
+//	{
+//		// power management register 0X6B we should write all 0's to wake the sensor up
+//		Data = 0;
+//		HAL_I2C_Mem_Write(&hi2c3, MPU6050_ADDR, PWR_MGMT_1_REG, 1,&Data, 1, 1000);
+//
+//		// Set DATA RATE of 1KHz by writing SMPLRT_DIV register
+//		Data = 0x07;
+//		HAL_I2C_Mem_Write(&hi2c3, MPU6050_ADDR, SMPLRT_DIV_REG, 1, &Data, 1, 1000);
+//
+//		// Set accelerometer configuration in ACCEL_CONFIG Register
+//		// XA_ST=0,YA_ST=0,ZA_ST=0, FS_SEL=0 -> ± 2g
+//		Data = 0x00;
+//		HAL_I2C_Mem_Write(&hi2c3, MPU6050_ADDR, ACCEL_CONFIG_REG, 1, &Data, 1, 1000);
+//
+//		// Set Gyroscopic configuration in GYRO_CONFIG Register
+//		// XG_ST=0,YG_ST=0,ZG_ST=0, FS_SEL=0 -> ± 250 °/s
+//		Data = 0x00;
+//		HAL_I2C_Mem_Write(&hi2c3, MPU6050_ADDR, GYRO_CONFIG_REG, 1, &Data, 1, 1000);
+//	}
+//
+//}
+//
+//
+//void MPU6050_Read_Accel (void)
+//{
+//	uint8_t Rec_Data[6];
+//
+//	// Read 6 BYTES of data starting from ACCEL_XOUT_H register
+//
+//	HAL_I2C_Mem_Read (&hi2c3, MPU6050_ADDR, ACCEL_XOUT_H_REG, 1, Rec_Data, 6, 1000);
+//
+//	Accel_X_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
+//	Accel_Y_RAW = (int16_t)(Rec_Data[2] << 8 | Rec_Data [3]);
+//	Accel_Z_RAW = (int16_t)(Rec_Data[4] << 8 | Rec_Data [5]);
+//
+//	/*** convert the RAW values into acceleration in 'g'
+//	     we have to divide according to the Full scale value set in FS_SEL
+//	     I have configured FS_SEL = 0. So I am dividing by 16384.0
+//	     for more details check ACCEL_CONFIG Register              ****/
+//
+//	Ax = Accel_X_RAW/16384.0;
+//	Ay = Accel_Y_RAW/16384.0;
+//	Az = Accel_Z_RAW/16384.0;
+//}
+//
+//
+//void MPU6050_Read_Gyro (void)
+//{
+//	uint8_t Rec_Data[6];
+//
+//	// Read 6 BYTES of data starting from GYRO_XOUT_H register
+//
+//	HAL_I2C_Mem_Read (&hi2c3, MPU6050_ADDR, GYRO_XOUT_H_REG, 1, Rec_Data, 6, 1000);
+//
+//	Gyro_X_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
+//	Gyro_Y_RAW = (int16_t)(Rec_Data[2] << 8 | Rec_Data [3]);
+//	Gyro_Z_RAW = (int16_t)(Rec_Data[4] << 8 | Rec_Data [5]);
+//
+//	/*** convert the RAW values into dps (°/s)
+//	     we have to divide according to the Full scale value set in FS_SEL
+//	     I have configured FS_SEL = 0. So I am dividing by 131.0
+//	     for more details check GYRO_CONFIG Register              ****/
+//
+//	Gx = Gyro_X_RAW/131.0;
+//	Gy = Gyro_Y_RAW/131.0;
+//	Gz = Gyro_Z_RAW/131.0;
+//}
+//
+
+
+
+
+
+
+
+
+
+
+
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -159,8 +275,19 @@ int main(void)
   mpu6050.mpu6050_Clk_Src=INT_OSC;
   mpu6050.enableFIFO=FIFO_ALL;
   mpu6050Init(&mpu6050);
+  //MPU6050_Init();
+
   while (1)
   {
+
+
+//	  uint8_t	data=0;
+//	  HAL_I2C_Mem_Read(&hi2c3, 0x68<<1, 0x75, 1, &data, 1, HAL_MAX_DELAY);
+//	  sprintf(msg,"Checksum:%ud \r\n",data);
+//	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+//	  HAL_Delay(500);
+
+
 	  /*if(p==0){
 	  while(i<180){
 		  move_servo(&htim2, i);
@@ -246,43 +373,46 @@ int main(void)
 /*
  * mpu6050 test
  */
-	  gatherRawData();
+//	  MPU6050_Read_Accel();
+//	 MPU6050_Read_Gyro();
+//
+ gatherRawData();
 //float ax=getXaccelerationFIFO(&mpu6050);//getXaccelerationRaw();
 float ax=getXaccelerationRaw();
-	  sprintf(msg,"AX:%lf \r\n",ax);
+	  sprintf(msg,"AX:%f \r\n",ax);
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
-	  gatherRawData();
+//	  gatherRawData();
 //float ay=getYaccelerationFIFO(&mpu6050);//getYaccelerationRaw();
 float ay=getYaccelerationRaw();
-	  sprintf(msg,"AY:%lf \r\n",ay);
+	  sprintf(msg,"AY:%f \r\n",ay);
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
-	  gatherRawData();
+	//  gatherRawData();
 //float az=getZaccelerationFIFO(&mpu6050);//getZaccelerationRaw();
 float az=getZaccelerationRaw();
-	  sprintf(msg,"AZ:%lf \r\n",az);
+	  sprintf(msg,"AZ:%f \r\n",az);
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
-	  gatherRawData();
+//	  gatherRawData();
 //float gx=getXgyroFIFO(&mpu6050);//getXgyroRaw();
 float gx=getXgyroRaw();
-	  sprintf(msg,"GX:%lf \r\n",gx);
+	  sprintf(msg,"GX:%f \r\n",gx);
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
-	 gatherRawData();
+//	 gatherRawData();
 //float gy=getYgyroFIFO(&mpu6050);//getYgyroRaw();
 float gy=getYgyroRaw();
-	  sprintf(msg,"GY:%lf \r\n",gy);
+	  sprintf(msg,"GY:%f \r\n",gy);
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
-	  gatherRawData();
+//	  gatherRawData();
 //float gz=getZgyroFIFO(&mpu6050);//getZgyroRaw();
 float gz=getZgyroRaw();
-	  sprintf(msg,"GZ:%lf \r\n",gz);
+	  sprintf(msg,"GZ:%f \r\n",gz);
 	  HAL_UART_Transmit(&huart1,(uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	  HAL_Delay(500);
-	  gatherRawData();
+	  //gatherRawData();
 //float t=getTemperatureFIFO(&mpu6050);//getTemperatureRaw();
 float t=getTemperatureRaw();
 	  sprintf(msg,"T:%lf \r\n",t);
@@ -415,7 +545,7 @@ static void MX_I2C3_Init(void)
 
   /* USER CODE END I2C3_Init 1 */
   hi2c3.Instance = I2C3;
-  hi2c3.Init.ClockSpeed = 400000;
+  hi2c3.Init.ClockSpeed = 100000;
   hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c3.Init.OwnAddress1 = 0;
   hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -724,14 +854,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : G4_Pin G5_Pin B6_Pin B7_Pin */
-  GPIO_InitStruct.Pin = G4_Pin|G5_Pin|B6_Pin|B7_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
   /*Configure GPIO pins : OTG_HS_ID_Pin OTG_HS_DM_Pin OTG_HS_DP_Pin */
   GPIO_InitStruct.Pin = OTG_HS_ID_Pin|OTG_HS_DM_Pin|OTG_HS_DP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -814,6 +936,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : B6_Pin B7_Pin */
+  GPIO_InitStruct.Pin = B6_Pin|B7_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
