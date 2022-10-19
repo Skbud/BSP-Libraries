@@ -150,7 +150,8 @@ void gatherRawData(void){
 	AccX=(uint16_t)(data[0]<<8|data[1]);
 	AccY=(uint16_t)(data[2]<<8|data[3]);
 	AccZ=(uint16_t)(data[4]<<8|data[5]);
-	TempSen=(uint16_t)(data[6]<<8|data[7]);
+	//TempSen=(uint16_t)(data[6]<<8|data[7]);
+	TempSen=(float)data[6]+(float)(data[7]/10.0);
 	GyroX=(uint16_t)(data[8]<<8|data[9]);
 	GyroY=(uint16_t)(data[10]<<8|data[11]);
 	GyroZ=(uint16_t)(data[12]<<8|data[13]);

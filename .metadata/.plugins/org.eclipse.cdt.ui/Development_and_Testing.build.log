@@ -1,10 +1,10 @@
-15:10:53 **** Incremental Build of configuration Debug for project Development_and_Testing ****
+16:31:20 **** Incremental Build of configuration Debug for project Development_and_Testing ****
 make -j12 all 
 arm-none-eabi-size   Development_and_Testing.elf 
    text	   data	    bss	    dec	    hex	filename
-  37328	    488	   2088	  39904	   9be0	Development_and_Testing.elf
+  37368	    488	   2088	  39944	   9c08	Development_and_Testing.elf
 Finished building: default.size.stdout
  
 
-15:10:54 Build Finished. 0 errors, 0 warnings. (took 359ms)
+16:31:21 Build Finished. 0 errors, 0 warnings. (took 421ms)
 
